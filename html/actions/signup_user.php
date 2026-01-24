@@ -34,7 +34,7 @@ try {
         exit();
     }
 
-    $sql = "insert into users (username, password) values (?, ?)";
+    $sql = "insert into users (username, password) values (?, SHA2(?, 256))";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $username, $password);
     $stmt->execute();

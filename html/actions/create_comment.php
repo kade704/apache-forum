@@ -33,7 +33,7 @@ try {
     error_log("MySQLi Error: " . $e->getMessage());
 }
 
-toast_message("success", "댓글 작성에 성공했습니다.");
+toast_message("success", "댓글 작성에 성공했어요!");
 
 header("Location: /post.php?id=" . $post_id);
 ?>

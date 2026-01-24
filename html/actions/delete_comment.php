@@ -33,6 +33,6 @@ try {
     error_log("MySQLi Error: " . $e->getMessage());
 }
 
-toast_message("success", "댓글을 성공적으로 삭제했습니다.");
+toast_message("success", "댓글을 성공적으로 삭제했어요.");
 header("Location: /post.php?id=" . $post_id);
 ?>
