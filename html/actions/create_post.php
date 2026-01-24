@@ -28,11 +28,34 @@ if (isset($content)) {
 }
 
 $image_file = $_FILES["image_file"];
-if (isset($image_file) && $image_file["error"] === UPLOAD_ERR_OK) {
-    $image_file_name = $image_file["name"];
+if (isset($image_file) && $image_file["error"] !== UPLOAD_ERR_NO_FILE) {
+    if ($image_file["error"] === UPLOAD_ERR_INI_SIZE) {
+        toast_message("error", "이미지가 업로드하기에 너무 커요.");
+        header("Location: /write.php");
+        exit();
+    }
+    if ($image_file["error"] !== UPLOAD_ERR_OK) {
+        toast_message("error", "이미지 업로드중 알수없는 오류가 발생했어요.");
+        header("Location: /write.php");
+        exit();
+    }
+
+    if (!is_dir("../uploads")) {
+        mkdir("../uploads");
+    }
+
+    $image_file_name = basename($image_file["name"]);
     $image_file_ext = strtolower(
         pathinfo($image_file_name, PATHINFO_EXTENSION),
     );
+
+    $allowed_extensions = ["jpg", "jpeg", "png", "gif"];
+
+    if (!in_array($image_file_ext, $allowed_extensions)) {
+        toast_message("error", "지원하지 않는 이미지 확장자예요.");
+        header("Location: /write.php");
+        exit();
+    }
 
     $image_file_tmp = $image_file["tmp_name"];
 
@@ -57,7 +80,7 @@ try {
     error_log("MySQLi Error: " . $e->getMessage());
 }
 
-toast_message("success", "게시물 작성에 성공했습니다.");
+toast_message("success", "게시물 작성에 성공했어요!");
 
 header("Location: /");
 ?>
