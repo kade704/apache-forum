@@ -74,7 +74,7 @@ try {
 </script>
 <main class="mt-10 mx-auto max-w-3xl space-y-4">
     <div class="flex items-center gap-4">
-        <a href="/"><button class="btn btn-secondary">Clear</button></a>
+        <a href="/"><button class="btn btn-secondary">초기화</button></a>
         <input id="query" class="flex-1 input" placeholder="Search" onchange="search()"/>
         <select class="select w-30" id="context">
             <option value="title">제목</option>
@@ -113,7 +113,7 @@ try {
     <div class="flex items-center justify-between">
         <div class="join" id="page_list"></div>
         <a href="write.php">
-            <button class="btn btn-primary">Create Post</button>
+            <button class="btn btn-primary">게시물 생성</button>
         </a>
     </div>
 </main>

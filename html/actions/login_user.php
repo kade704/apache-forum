@@ -8,8 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-$username = $_POST["username"];
-$password = $_POST["password"];
+$username = $_POST["username"] ?? null;
+$password = $_POST["password"] ?? null;
 if (!isset($username) || !isset($password)) {
     toast_message("error", "유저이름 또는 비밀번호를 입력하세요.");
     header("Location: /login.php");

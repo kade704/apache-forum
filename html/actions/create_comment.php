@@ -8,14 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-$post_id = $_POST["post_id"];
-$content = $_POST["content"];
+$post_id = $_POST["post_id"] ?? null;
+$content = $_POST["content"] ?? null;
 if (!isset($post_id) || !isset($content)) {
     header("Location: /");
     exit();
 }
 
-$username = $_SESSION["username"];
+$username = $_SESSION["username"] ?? null;
 if (!isset($username)) {
     header("Location: /post.php?id=" . $post_id);
     exit();

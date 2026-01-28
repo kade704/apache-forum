@@ -12,8 +12,8 @@
         </div>
         <button type="submit" class="mt-10 h-12 btn btn-primary text-lg">로그인</button>
         <div class="mt-4 w-full flex items-center justify-center gap-2 text-sm">
-            <h2>계정이 없으신가요?</h2>
-            <a class="font-semibold underline" href="signup.php">가입하기</a>
+            <h2>아직 회원이 아니신가요? </h2>
+            <a class="font-semibold underline" href="signup.php">회원가입</a>
         </div>
     </form>
 <?php require_once "includes/footer.php"; ?>

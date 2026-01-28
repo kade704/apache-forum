@@ -80,7 +80,7 @@ $username_session = $_SESSION["username"];
                 <input type="password" name="curr_password" class="input w-full h-14 pt-3" required/>
             </div>
             <p class="mt-4">주의, 작성한 모든 글과 댓글이 삭제됩니다.</p>
-            <button type="submit" class="mt-6 h-12 btn btn-secondary">Delete User</button>
+            <button type="submit" class="mt-6 h-12 btn btn-secondary">유저 삭제</button>
         </form>
         HTML;
     } ?>

@@ -8,13 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-$username = $_SESSION["username"];
+$username = $_SESSION["username"] ?? null;
 if (!isset($username)) {
     header("Location: /");
     exit();
 }
 
-$curr_password = $_POST["curr_password"];
+$curr_password = $_POST["curr_password"] ?? null;
 if (!isset($curr_password)) {
     toast_message("error", "비밀번호를 입력하세요.");
     header("Location: /profile.php?username=" . $username);

@@ -8,13 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-$username = $_SESSION["username"];
+$username = $_SESSION["username"] ?? null;
 if (!isset($username)) {
     header("Location: /");
     exit();
 }
 
-$title = $_POST["title"];
+$title = $_POST["title"] ?? null;
 if (!isset($title)) {
     header("Location: /");
     exit();
@@ -22,12 +22,12 @@ if (!isset($title)) {
 
 $title = htmlspecialchars($title, ENT_QUOTES, "UTF-8");
 
-$content = $_POST["content"];
+$content = $_POST["content"] ?? null;
 if (isset($content)) {
     $content = htmlspecialchars($content, ENT_QUOTES, "UTF-8");
 }
 
-$image_file = $_FILES["image_file"];
+$image_file = $_FILES["image_file"] ?? null;
 if (isset($image_file) && $image_file["error"] !== UPLOAD_ERR_NO_FILE) {
     if ($image_file["error"] === UPLOAD_ERR_INI_SIZE) {
         toast_message("error", "이미지가 업로드하기에 너무 커요.");

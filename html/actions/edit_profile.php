@@ -8,13 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-$description = $_POST["content"];
+$description = $_POST["content"] ?? null;
 if (!isset($description)) {
     header("Location: /");
     exit();
 }
 
-$username = $_SESSION["username"];
+$username = $_SESSION["username"] ?? null;
 if (!isset($username)) {
     header("Location: /post.php?id=" . $post_id);
     exit();

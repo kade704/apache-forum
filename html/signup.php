@@ -14,10 +14,10 @@
         <p class="absolute text-sm z-10 translate-x-3 translate-y-1 opacity-50">비밀번호 확인</p>
         <input type="password" id="password_repeat" name="password_repeat" pattern="[a-zA-Z0-9\s]*" class="input w-full h-14 pt-3" required/>
     </div>
-    <button type="submit" class="mt-10 h-12 btn btn-primary text-lg">가입</button>
+    <button type="submit" class="mt-10 h-12 btn btn-primary text-lg">회원가입</button>
     <div class="mt-4 w-full flex items-center justify-center gap-2 text-sm">
-        <h2>계정을 이미 가지고 있나요?</h2>
-        <a class="font-semibold underline" href="login.php">로그인 하기</a>
+        <h2>이미 계정이 있으신가요?</h2>
+        <a class="font-semibold underline" href="login.php">로그인</a>
     </div>
 </form>
 <?php require_once "includes/footer.php"; ?>

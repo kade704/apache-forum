@@ -9,8 +9,8 @@ if (!isset($username)) {
     exit();
 }
 
-$curr_password = $_POST["curr_password"];
-$new_password = $_POST["new_password"];
+$curr_password = $_POST["curr_password"] ?? null;
+$new_password = $_POST["new_password"] ?? null;
 if (!isset($curr_password) || !isset($new_password)) {
     toast_message("error", "비밀번호를 입력하세요.");
     header("Location: /profile.php?username=" . $username);

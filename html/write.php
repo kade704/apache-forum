@@ -2,7 +2,7 @@
 <?php
 require_once "functions/db.php";
 
-$username = $_SESSION["username"];
+$username = $_SESSION["username"] ?? null;
 
 if (!$username) {
     header("Location: /login.php");

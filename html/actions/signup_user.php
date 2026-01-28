@@ -8,9 +8,19 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-$username = $_POST["username"];
-$password = $_POST["password"];
-$password_repeat = $_POST["password_repeat"];
+$username = $_POST["username"] ?? null;
+$password = $_POST["password"] ?? null;
+$password_repeat = $_POST["password_repeat"] ?? null;
+if (!isset($username) || !isset($password) || !isset($password_repeat)) {
+    header("Location: /");
+    exit();
+}
+
+if (strlen($password) < 4) {
+    toast_message("error", "비밀번호는 4글자 이상이어야 해요.");
+    header("Location: /signup.php");
+    exit();
+}
 
 if ($password != $password_repeat) {
     toast_message("error", "두 비밀번호가 맞지 않아요.");
@@ -29,7 +39,7 @@ try {
 
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
-        toast_message("error", "해당 유저이름을 이미 사용하고 있어요.");
+        toast_message("error", "해당 유저이름은 이미 사용하고 있어요.");
         header("Location: /signup.php");
         exit();
     }
