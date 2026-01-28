@@ -44,27 +44,21 @@ if (isset($image_file) && $image_file["error"] !== UPLOAD_ERR_NO_FILE) {
         mkdir("../uploads");
     }
 
-    $image_file_name = basename($image_file["name"]);
-    $image_file_ext = strtolower(
-        pathinfo($image_file_name, PATHINFO_EXTENSION),
-    );
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime_type = finfo_file($finfo, $image_file["tmp_name"]);
 
-    $allowed_extensions = ["jpg", "jpeg", "png", "gif"];
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
 
-    if (!in_array($image_file_ext, $allowed_extensions)) {
-        toast_message("error", "지원하지 않는 이미지 확장자예요.");
+    if (!in_array($mime_type, $allowed_types)) {
+        toast_message("error", "지원하지 않는 이미지 타입이예요. (jpg, png, gif 만 허용)");
         header("Location: /write.php");
         exit();
     }
 
-    $image_file_tmp = $image_file["tmp_name"];
+    $file_name = uniqid();
+    $upload_path = "../uploads/" . $file_name;
 
-    $new_file_name = uniqid() . "." . $image_file_ext;
-
-    $upload_path = "../uploads/" . $new_file_name;
-    $image_url = "/uploads/" . $new_file_name;
-
-    move_uploaded_file($image_file_tmp, $upload_path);
+    move_uploaded_file($image_file["tmp_name"], $upload_path);
 }
 
 enable_exceptions();
@@ -74,7 +68,7 @@ try {
     $sql =
         "insert into posts (username, title, content, image_url) values (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $username, $title, $content, $image_url);
+    $stmt->bind_param("ssss", $username, $title, $content, $file_name);
     $stmt->execute();
 } catch (mysqli_sql_exception $e) {
     error_log("MySQLi Error: " . $e->getMessage());

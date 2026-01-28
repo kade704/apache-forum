@@ -54,7 +54,7 @@ try {
         HTML; ?>
         <?php if ($post->image_url) {
             echo <<<HTML
-            <img src={$post->image_url} class="mb-4" />
+                <img src="/actions/download_image.php?post_id={$post->id}" class="mb-4" />
             HTML;
         } ?>
         <?php echo <<<HTML
