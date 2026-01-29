@@ -62,10 +62,14 @@ try {
         HTML; ?>
         <?php if ($username == $post->username) {
             echo <<<HTML
-            <form method="POST" action="actions/delete_post.php">
-                <input name="post_id" value={$post->id} hidden />
-                <button type="submit" class="mt-4 btn btn-sm btn-secondary">게시글 삭제</button>
-            </form>
+            <div class="flex gap-4">
+                <a href="/edit.php?post_id={$post->id}">
+                    <button type="submit" class="mt-4 btn btn-sm btn-primary">게시글 수정</button>
+                </a>
+                <a href="/delete.php?post_id={$post->id}">
+                    <button type="submit" class="mt-4 btn btn-sm btn-secondary">게시글 삭제</button>
+                </a>
+            </div>
             HTML;
         } ?>
     </div>

@@ -8,6 +8,33 @@ if (!$username) {
     header("Location: /login.php");
     exit();
 }
+
+$post_id = $_GET["post_id"] ?? null;
+if (!isset($post_id)) {
+    header("Location: /");
+    exit();
+}
+
+enable_exceptions();
+try {
+    $conn = open_db();
+
+    $sql =
+        "select * from posts where id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $post_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $post = $result->fetch_object();
+
+    if (!isset($post) || $post->username != $username) {
+        header("Location: /");
+        exit();
+    }
+} catch (mysqli_sql_exception $e) {
+    error_log("MySQLi Error: " . $e->getMessage());
+}
 ?>
 
 <?php require_once "includes/header.php"; ?>
@@ -16,6 +43,12 @@ if (!$username) {
     const fileInput = document.getElementById('file-input');
     const preview = document.getElementById('preview');
     const defaultImage = document.getElementById('default-image');
+    const urlParams = new URLSearchParams(window.location.search);
+
+    preview.src = "/actions/download_image.php?post_id=" + urlParams.get("post_id");
+    preview.onload = () => {
+        defaultImage.style.display = "none";
+    }
 
     fileInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -33,15 +66,16 @@ if (!$username) {
 </script>
 <main class="pt-20 mx-auto max-w-3xl">
     <?php echo <<<HTML
-    <form method="POST" enctype="multipart/form-data" action="actions/create_post.php" class="p-6 flex flex-col bg-base-100 rounded-lg shadow-md">
+    <form method="POST" enctype="multipart/form-data" action="actions/edit_post.php" class="p-6 flex flex-col bg-base-100 rounded-lg shadow-md">
         <div class="flex justify-between">
-            <h2 class='text-xl font-bold'>게시글 작성</h2>
+            <h2 class='text-xl font-bold'>게시글 수정</h2>
             <h2 class='opacity-50'>{$username}</h2>
         </div>
         <div class="divider my-2"></div>
         <div class="space-y-4">
-            <input type="text" name="title" class="flex-1 input w-full"  placeholder="제목" required />
-            <textarea type="text" name="content" class="textarea w-full min-h-48" placeholder="내용"></textarea>
+            <input type="text" name="post_id" hidden value={$post->id} />
+            <input type="text" name="title" class="flex-1 input w-full"  placeholder="제목" required value={$post->title} />
+            <textarea type="text" name="content" class="textarea w-full min-h-48" placeholder="내용">{$post->content}</textarea>
             <div class="p-2 w-full border border-content border-dashed rounded-md">
                 <p class="text-sm">사진 등록</p>
                 <div class="w-full my-4 flex flex-col items-center gap-2">
