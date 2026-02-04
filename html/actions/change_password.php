@@ -3,7 +3,7 @@
 require_once "../functions/db.php";
 require_once "../functions/toast.php";
 
-$username = $_SESSION["username"];
+$username = $_SESSION["username"] ?? null;
 if (!isset($username)) {
     header("Location: /");
     exit();

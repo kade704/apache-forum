@@ -8,3 +8,5 @@ ARG UID=1000
 ARG GID=1000
 RUN groupmod -g ${GID} www-data && \
     usermod -u ${UID} -g www-data www-data
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"

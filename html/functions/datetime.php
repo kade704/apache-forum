@@ -1,8 +1,6 @@
 <?php
 function formatDistanceToNow(string $datetime): string
 {
-    $timezone = new DateTimeZone("Asia/Seoul");
-
     $now = new DateTime("now", $timezone);
     $target = new DateTime($datetime, $timezone);
 
