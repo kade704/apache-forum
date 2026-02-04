@@ -25,9 +25,9 @@ enable_exceptions();
 try {
     $conn = open_db();
 
-    $sql = "select password from users where password = ?";
+    $sql = "select * from users where username = ? and password = SHA2(?, 256)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $curr_password);
+    $stmt->bind_param("ss", $username, $curr_password);
     $stmt->execute();
 
     $result = $stmt->get_result();

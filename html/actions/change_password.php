@@ -17,13 +17,19 @@ if (!isset($curr_password) || !isset($new_password)) {
     exit();
 }
 
+if (strlen($new_password) < 4) {
+    toast_message("error", "비밀번호는 4글자 이상이어야 해요.");
+    header("Location: /profile.php?username=" . $username);
+    exit();
+}
+
 enable_exceptions();
 try {
     $conn = open_db();
 
-    $sql = "select password from users where password = ?";
+    $sql = "select * from users where username = ? and password = SHA2(?, 256)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $curr_password);
+    $stmt->bind_param("ss", $username, $curr_password);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -34,7 +40,7 @@ try {
         exit();
     }
 
-    $sql = "update users set password = ? where username = ?";
+    $sql = "update users set password = SHA2(256, ?) where username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $new_password, $username);
     $stmt->execute();
