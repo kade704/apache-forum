@@ -52,10 +52,18 @@ try {
         </div>
         <div class="divider my-2"></div>
         HTML; ?>
-        <?php if ($post->image_url) {
-            echo <<<HTML
-                <img src="/actions/download_image.php?post_id={$post->id}" class="mb-4" />
-            HTML;
+        <?php if ($post->media_id) {
+            if (str_starts_with($post->media_type, "image")) {
+                echo <<<HTML
+                    <img src="/actions/download_media.php?post_id={$post->id}" class="mb-4" />
+                HTML;
+            } else if (str_starts_with($post->media_type, "video")) {
+                echo <<<HTML
+                    <video controls autoplay class="mb-4">
+                        <source src="/actions/download_media.php?post_id={$post->id}" type={$post->media_type}>
+                    </video>
+                HTML;
+            }
         } ?>
         <?php echo <<<HTML
         <h1 class='text-lg min-h-24'>{$post->content}</h1>

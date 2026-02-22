@@ -83,7 +83,7 @@ try {
         </select>
     </div>
     <ul class="list bg-base-100 rounded-box shadow-md">
-        <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Post Lists</li>
+        <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">게시글 목록</li>
         <?php for ($i = 0; $i < 10; $i++) {
             $row = $posts->fetch_object();
             if ($row) {

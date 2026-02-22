@@ -8,16 +8,30 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
+$email = $_POST["email"] ?? null;
 $username = $_POST["username"] ?? null;
 $password = $_POST["password"] ?? null;
 $password_repeat = $_POST["password_repeat"] ?? null;
-if (!isset($username) || !isset($password) || !isset($password_repeat)) {
+if (!isset($email) || !isset($username) || !isset($password) || !isset($password_repeat)) {
     header("Location: /");
     exit();
 }
 
-if (strlen($password) < 4) {
-    toast_message("error", "비밀번호는 4글자 이상이어야 해요.");
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    toast_message("error", "올바르지 않은 이메일 형식이예요.");
+    header("Location: /signup.php");
+    exit();
+}
+
+$username = htmlspecialchars($username, ENT_QUOTES, "UTF-8");
+if (strlen($username) < 4) {
+    toast_message("error", "유저이름은 4글자 이상이어야 해요.");
+    header("Location: /signup.php");
+    exit();
+}
+
+if (strlen($password) < 6) {
+    toast_message("error", "비밀번호는 6글자 이상이어야 해요.");
     header("Location: /signup.php");
     exit();
 }
@@ -44,17 +58,15 @@ try {
         exit();
     }
 
-    $sql = "insert into users (username, password) values (?, SHA2(?, 256))";
+    $sql = "insert into users (email, username, password) values (?, ?, SHA2(?, 256))";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("sss", $email, $username, $password);
     $stmt->execute();
 } catch (mysqli_sql_exception $e) {
     error_log("MySQLi Error: " . $e->getMessage());
 }
 
-$_SESSION["username"] = $username;
-
-toast_message("success", "가입성공!");
+toast_message("success", "가입성공! 로그인을 진행하세요");
 
 header("Location: /");
 ?>

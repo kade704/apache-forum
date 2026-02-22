@@ -43,10 +43,11 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `posts` (
   `id` int(11) NOT NULL,
-  `username` varchar(32) DEFAULT NULL,
+  `username` varchar(32) NOT NULL,
   `title` text NOT NULL,
-  `content` text DEFAULT NULL,
-  `image_url` text DEFAULT NULL,
+  `content` text NOT NULL,
+  `media_id` text DEFAULT NULL,
+  `media_type` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
@@ -59,6 +60,7 @@ CREATE TABLE `posts` (
 CREATE TABLE `users` (
   `username` varchar(32) NOT NULL,
   `password` varchar(64) NOT NULL,
+  `email`    varchar(64) NOT NULL,
   `description` text DEFAULT '안녕하세요!',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;

@@ -14,6 +14,8 @@ if (!isset($description)) {
     exit();
 }
 
+$description = htmlspecialchars($description, ENT_QUOTES, "UTF-8");
+
 $username = $_SESSION["username"] ?? null;
 if (!isset($username)) {
     header("Location: /post.php?id=" . $post_id);

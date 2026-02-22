@@ -41,10 +41,15 @@ $username_session = $_SESSION["username"];
             <h2 class='text-sm opacity-50'>{$user->created_at} 가입</h2>
         </div>
         <div class="divider my-2"></div>
+
         HTML; ?>
         <?php if ($username == $username_session) {
             echo <<<HTML
             <form method="POST" action="actions/edit_profile.php" class="flex flex-col">
+                <div class="mt-4 relative">
+                   	<p class="absolute text-sm z-10 translate-x-3 translate-y-1 opacity-50">이메일</p>
+                    <input type="text" class="input w-full h-14 pt-3" value="{$user->email}" disabled />
+                </div>
                 <div class="mt-4 relative">
                    	<p class="absolute text-sm z-10 translate-x-3 translate-y-1 opacity-50">자기소개</p>
                     <textarea type="text" name="content" class="textarea w-full h-20 pt-6" required>{$user->description}</textarea>

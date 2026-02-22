@@ -45,7 +45,7 @@ try {
     const defaultImage = document.getElementById('default-image');
     const urlParams = new URLSearchParams(window.location.search);
 
-    preview.src = "/actions/download_image.php?post_id=" + urlParams.get("post_id");
+    preview.src = "/actions/download_media.php?post_id=" + urlParams.get("post_id");
     preview.onload = () => {
         defaultImage.style.display = "none";
     }

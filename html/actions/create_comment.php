@@ -15,6 +15,8 @@ if (!isset($post_id) || !isset($content)) {
     exit();
 }
 
+$content = htmlspecialchars($content, ENT_QUOTES, "UTF-8");
+
 $username = $_SESSION["username"] ?? null;
 if (!isset($username)) {
     header("Location: /post.php?id=" . $post_id);
