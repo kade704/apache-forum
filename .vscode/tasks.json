@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "컨테이너 생성",
+            "type": "shell",
+            "command": "docker compose up -d --build",
+        },
+        {
+            "label": "컨테이너 종료",
+            "type": "shell",
+            "command": "docker compose down -v",
+        },
+        {
+            "label": "컨테이너 로그",
+            "type": "shell",
+            "command": "docker compose logs -f",
+        },
+        {
+            "label": "컨테이너 재시작",
+            "type": "shell",
+            "command": "docker compose restart",
+        }
+    ]
+}
